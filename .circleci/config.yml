@@ -78,7 +78,7 @@ jobs:
           name: Testing frontend
           command: |
               cd frontend
-              npm run lint
+              jest
                 
   test-backend:
     docker:
@@ -91,7 +91,7 @@ jobs:
           name: Testing backend
           command: |
               cd backend
-              npm run lint
+              jest --runInBand
 
             
 
