@@ -78,6 +78,7 @@ jobs:
           name: Testing frontend
           command: |
               cd frontend
+              npm i
               jest
                 
   test-backend:
@@ -91,6 +92,7 @@ jobs:
           name: Testing backend
           command: |
               cd backend
+              npm i
               jest --runInBand
 
             
