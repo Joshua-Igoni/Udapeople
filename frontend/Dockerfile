@@ -15,4 +15,4 @@ RUN npm install serve -g
 # Expose port
 EXPOSE 3000
 # Start serve
-CMD ["serve", "-s", "dist"]
+CMD ["serve", "-s", "build"]
