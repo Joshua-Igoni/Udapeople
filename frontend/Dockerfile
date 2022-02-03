@@ -1,8 +1,18 @@
-FROM node:14.8.0-alpine3.12
-WORKDIR /front
-COPY package.json ./
-COPY package-lock.json ./
+FROM node:16.13.2
+ENV NODE_ENV production
+# Add a work directory
+WORKDIR /app
+# Cache and Install dependencies
+COPY package*.json ./
+# Install app dependencies
 RUN npm install
-COPY ./ ./
+# Copy app files
+COPY . .
+# Build the app
+RUN npm run build
+# Install serve
+RUN npm install serve -g 
+# Expose port
 EXPOSE 3000
-CMD [ "npm", "start" ]
+# Start serve
+CMD ["serve", "-s", "dist"]
