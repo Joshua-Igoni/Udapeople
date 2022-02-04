@@ -1,18 +1,20 @@
-FROM node:16.13.2
-ENV NODE_ENV production
+FROM node:16.13.2 as build
 # Add a work directory
 WORKDIR /app
 # Cache and Install dependencies
-COPY package*.json /app
+COPY package.json package.json
+COPY package-lock.json package-lock.json 
 # Install app dependencies
-RUN npm install
+RUN npm ci --production
 # Copy app files
-COPY . /app
+COPY . .
 # Build the app
 RUN npm run build
-# Install serve
-RUN npm install serve -g 
+
+FROM nginx:1.12-alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
 # Expose port
-EXPOSE 3000
-# Start serve
-CMD ["serve", "-s", "build"]
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
